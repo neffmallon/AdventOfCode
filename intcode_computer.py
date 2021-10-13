@@ -14,7 +14,7 @@ def mul(code, input1, input2, target_index):
     code[target_index] = input1 * input2
 
 
-def set_input(code, input1, target_index):
+def set_input(code, target_index, input1):
     code[target_index] = input1
 
 
@@ -88,7 +88,7 @@ def intcode_computer(in_code: dict, inputs=None):
             f"command_idx {command_idx}, Instruction: {instruction}, target: {args[-1]}, raw_args: {raw_args}, args: {args}"
         )
         out = operator[instruction](code, *args)
-        if out:
+        if out is not None:
             print("Code Output: {}".format(out))
             outputs.append(out)
 
