@@ -37,8 +37,14 @@ def test_intcode_computer_day2(day_2_input):
 
 
 def test_intcode_computer_day5(day_5_part_1_input):
+    # part 1
     inputs = [1]
     out_code, outputs = intcode_computer(day_5_part_1_input, inputs)
     for code in outputs[:-1]:
         assert code == 0
     assert outputs[-1] == 5346030
+
+    # part 2
+    inputs = [5]
+    out_code, outputs = intcode_computer(day_5_part_1_input, inputs)
+    assert outputs == [513116]
