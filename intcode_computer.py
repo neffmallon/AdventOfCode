@@ -1,7 +1,7 @@
 import logging
 from intcode_test_fixtures import day_5_part_1_input
 
-logging.basicConfig(filename='incode.log', level=logging.DEBUG)
+logging.basicConfig(filename='incode.log', level=logging.ERROR)
 
 # <editor-fold desc="Operation definitions">
 # Arguments are organized to accept the code, the target index, then any additional arguments
@@ -117,7 +117,7 @@ def intcode_computer(in_code: dict, inputs=None):
         out = operator[instruction](code, *args)
 
         if instruction == 4:
-            print("Code Output: {}".format(out))
+            logging.debug("Code Output: {}".format(out))
             outputs.append(out)
             command_idx += 1 + n_args[instruction]
         elif instruction in (5, 6) and out is not None:
