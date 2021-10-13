@@ -20,7 +20,11 @@ def med_test():
 @pytest.fixture()
 def hard_test():
     """answer is 135"""
-    return "R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51\nU98,R91,D20,R16,D67,R40,U7,R15,U6,R7", 135
+    return (
+        "R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51\nU98,R91,D20,R16,D67,R40,U7,R15,U6,R7",
+        135,
+    )
+
 
 def test_wire_cross_finder(easy_test, med_test, hard_test):
     assert wire_cross_finder(easy_test[0]) == easy_test[1]

@@ -1,3 +1,5 @@
+import logging
+
 input = [
     1,
     0,
@@ -129,28 +131,41 @@ def opcode_reader(code: list):
     max_steps = (len(out_code) // 4) + 1
     while out_code[command_idx] != 99 and max_steps > 0:
         if out_code[command_idx] == 1:
-            out_code[out_code[command_idx + 3]] = out_code[out_code[command_idx + 1]] + out_code[out_code[command_idx + 2]]
+            logging.debug(
+                f"command_idx {command_idx}, Instruction: 1, target: {out_code[command_idx + 3]}, args: {[out_code[out_code[command_idx + 1]], out_code[out_code[command_idx + 2]]]}"
+            )
+            out_code[out_code[command_idx + 3]] = (
+                out_code[out_code[command_idx + 1]]
+                + out_code[out_code[command_idx + 2]]
+            )
         elif out_code[command_idx] == 2:
-            out_code[out_code[command_idx + 3]] = out_code[out_code[command_idx + 1]] * out_code[out_code[command_idx + 2]]
+            logging.debug(
+                f"command_idx {command_idx}, Instruction: 2, target: {out_code[command_idx + 3]}, args: {[out_code[out_code[command_idx + 1]], out_code[out_code[command_idx + 2]]]}"
+            )
+            out_code[out_code[command_idx + 3]] = (
+                out_code[out_code[command_idx + 1]]
+                * out_code[out_code[command_idx + 2]]
+            )
         else:
             raise ValueError("That code is not valid")
         max_steps -= 1
         command_idx += 4
 
     if out_code[command_idx] == 99:
-        #print("Code Completed with End Code")
+        logging.info("Code Completed with End Code")
         return out_code
     if max_steps <= 0:
-        print("Warning! Ran out of steps!")
+        logging.error("Warning! Ran out of steps!")
         return out_code
 
 
 def test_opcode_reader():
-    assert opcode_reader([1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50]) == [3500, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50]
-    assert opcode_reader([1, 0, 0, 0, 99]) == [2,0,0,0,99]
-    assert opcode_reader([2,3,0,3,99]) == [2,3,0,6,99]
-    assert opcode_reader([2,4,4,5,99,0]) == [2,4,4,5,99,9801]
-    assert opcode_reader([1,1,1,4,99,5,6,0,99]) == [30,1,1,4,2,5,6,0,99]
+    assert opcode_reader([1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50]) == \
+           [3500, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50]
+    assert opcode_reader([1, 0, 0, 0, 99]) == [2, 0, 0, 0, 99]
+    assert opcode_reader([2, 3, 0, 3, 99]) == [2, 3, 0, 6, 99]
+    assert opcode_reader([2, 4, 4, 5, 99, 0]) == [2, 4, 4, 5, 99, 9801]
+    assert opcode_reader([1, 1, 1, 4, 99, 5, 6, 0, 99]) == [30, 1, 1, 4, 2, 5, 6, 0, 99]
 
 
 def solution_searcher(code: list) -> list:
