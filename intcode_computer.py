@@ -1,7 +1,7 @@
 import logging
 from intcode_test_fixtures import day_5_part_1_input
 
-logging.basicConfig(filename='incode.log', level=logging.ERROR)
+logging.basicConfig(filename='intcode.log', level=logging.DEBUG)
 
 # <editor-fold desc="Operation definitions">
 # Arguments are organized to accept the code, the target index, then any additional arguments
@@ -108,8 +108,13 @@ def intcode_computer(in_code: dict, inputs=None):
             # target index is the raw argument
             args[-1] = raw_args[-1]
         if instruction == 3:
-            args += [inputs[input_idx]]
-            input_idx += 1
+            try:
+                args += [inputs[input_idx]]
+                input_idx += 1
+            except IndexError as e:
+                print(code)
+                print(f"command_idx {command_idx}, Instruction: {instruction}, target: {args[-1]}, raw_args: {raw_args}, args: {args}")
+                raise e
 
         logging.debug(
             f"command_idx {command_idx}, Instruction: {instruction}, target: {args[-1]}, raw_args: {raw_args}, args: {args}"
