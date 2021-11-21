@@ -1,5 +1,7 @@
 import pytest
 from pytest import Pytester
+
+from computer import IntcodeComputer
 from intcode_computer import intcode_computer, instruction_reader
 from intcode_test_fixtures import test_pairs, day_2_input, day_5_part_1_input
 
@@ -27,13 +29,25 @@ def test_intcode_computer_simple(test_pairs):
         assert intcode_computer(code)[0] == result
 
 
+def test_IntcodeComputer(test_pairs):
+    for code, result in test_pairs:
+        computer = IntcodeComputer(code)
+        computer.run_to_halt()
+        assert computer.code == {idx: v for idx, v in enumerate(result)}
+
+
 def test_intcode_computer_day2(day_2_input):
     day_2_input[1] = 12
     day_2_input[2] = 2
-    assert intcode_computer(day_2_input)[0][0] == 3716293
+    computer = IntcodeComputer(day_2_input)
+    computer.run_to_halt()
+    assert computer.code[0] == 3716293
+
     day_2_input[1] = 64
     day_2_input[2] = 29
-    assert intcode_computer(day_2_input)[0][0] == 19690720
+    computer = IntcodeComputer(day_2_input)
+    computer.run_to_halt()
+    assert computer.code[0] == 19690720
 
 
 def test_intcode_computer_day5(day_5_part_1_input):
@@ -48,3 +62,19 @@ def test_intcode_computer_day5(day_5_part_1_input):
     inputs = [5]
     out_code, outputs = intcode_computer(day_5_part_1_input, inputs)
     assert outputs == [513116]
+
+
+def test_IntcodeComputer_day5(day_5_part_1_input):
+    # part 1
+    inputs = [1]
+    computer = IntcodeComputer(day_5_part_1_input, inputs=inputs)
+    computer.run_to_halt()
+    for code in computer.outputs[:-1]:
+        assert code == 0
+    assert computer.outputs[-1] == 5346030
+
+    # part 2
+    inputs = [5]
+    computer = IntcodeComputer(day_5_part_1_input, inputs=inputs)
+    computer.run_to_halt()
+    assert computer.outputs == [513116]
