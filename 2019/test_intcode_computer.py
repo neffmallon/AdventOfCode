@@ -70,3 +70,7 @@ def test_intcode_computer_test_day9():
     computer.run_to_halt()
     assert len(computer.outputs) == 1
     assert computer.outputs[0] == 33679
+
+
+if __name__ == "__main__":
+    pass

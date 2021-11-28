@@ -732,3 +732,7 @@ def test_day_7_part_2():
     ]
     thruster_signals = fedback_amplification_circuit_optimizer(program)
     assert thruster_signals == 4374895
+
+
+if __name__ == "__main__":
+    pass

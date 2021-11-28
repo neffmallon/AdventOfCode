@@ -82,13 +82,17 @@ class IntcodeComputer:
         opcode, modes = self.read_instruction(self.code[self.pointer])
         try:
             arg_idx = [
-                i for i in range(self.pointer + 1, self.pointer + 1 + self.n_args[opcode])
+                i
+                for i in range(self.pointer + 1, self.pointer + 1 + self.n_args[opcode])
             ]
         except KeyError as e:
             logging.debug("ouch")
             raise e
         raw_args = [self.code[idx] for idx in arg_idx]
-        args = [self.get_arg(opcode, mode, raw_arg, arg_num+1) for mode, raw_arg, arg_num in zip(modes, raw_args, range(len(modes)))]
+        args = [
+            self.get_arg(opcode, mode, raw_arg, arg_num + 1)
+            for mode, raw_arg, arg_num in zip(modes, raw_args, range(len(modes)))
+        ]
         # if opcode not in (4, 5, 6):
         #     # target index is the raw argument
         #     args[-1] = raw_args[-1]
@@ -175,9 +179,18 @@ class IntcodeComputer:
 
     def set_input(self, target_index):
         input1 = self.inputs.pop(0)
-        logging.debug(f"Input check: pointer: {self.pointer}  input: {input1}               raw target: {self.code[self.pointer+1]}")
-        logging.debug(f"relative base: {self.relative_base}      target_index: {target_index}  target_index value: {self.code[target_index]}")
-        sc = " ".join([str(self.code[i]) for i in range(max(self.pointer-5, 0), self.pointer+7)])
+        logging.debug(
+            f"Input check: pointer: {self.pointer}  input: {input1}               raw target: {self.code[self.pointer+1]}"
+        )
+        logging.debug(
+            f"relative base: {self.relative_base}      target_index: {target_index}  target_index value: {self.code[target_index]}"
+        )
+        sc = " ".join(
+            [
+                str(self.code[i])
+                for i in range(max(self.pointer - 5, 0), self.pointer + 7)
+            ]
+        )
         logging.debug(f"Surrounding code: {sc}")
         self.code[target_index] = input1
         logging.debug(f"New target_index value: {self.code[target_index]}")
@@ -215,7 +228,9 @@ class IntcodeComputer:
 
     def modify_relative_base(self, input1):
 
-        logging.debug(f"Input check: pointer: {self.pointer}  \tinput: {input1}  \traw input: {self.code[self.pointer+1]}")
+        logging.debug(
+            f"Input check: pointer: {self.pointer}  \tinput: {input1}  \traw input: {self.code[self.pointer+1]}"
+        )
         arg1 = self.code[self.pointer]
         if str(arg1)[0] == "9":
             target_index = arg1
@@ -226,8 +241,15 @@ class IntcodeComputer:
         else:
             logging.debug(f"Instruction: {arg1}")
             raise ValueError
-        logging.debug(f"relative base: {self.relative_base}   \ttarget_index: {target_index}  \ttarget_index value: {self.code[target_index]}")
-        sc = " ".join([str(self.code[i]) for i in range(max(self.pointer-5, 0), self.pointer+7)])
+        logging.debug(
+            f"relative base: {self.relative_base}   \ttarget_index: {target_index}  \ttarget_index value: {self.code[target_index]}"
+        )
+        sc = " ".join(
+            [
+                str(self.code[i])
+                for i in range(max(self.pointer - 5, 0), self.pointer + 7)
+            ]
+        )
         logging.debug(f"Surrounding code: {sc}\n")
         self.relative_base += input1
         self.pointer += 2
@@ -239,6 +261,7 @@ class IntcodeComputer:
         )
 
     # </editor-fold>
+
 
 if __name__ == "__main__":
     computer = IntcodeComputer(boost, inputs=[2])

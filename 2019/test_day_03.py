@@ -45,3 +45,7 @@ def test_med_wire_cross_finder_wire_distance(med_test):
 
 def test_hard_wire_cross_finder_wire_distance(hard_test):
     assert wire_cross_finder_wire_distance(hard_test[0].split("\n")) == 410
+
+
+if __name__ == "__main__":
+    pass

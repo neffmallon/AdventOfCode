@@ -90,8 +90,9 @@ def wire_cross_finder_wire_distance(wire_list: list):
 
     return min_dist
 
+
 if __name__ == "__main__":
-    with open("day_03_input.txt", 'r') as f:
+    with open("day_03_input.txt", "r") as f:
         wire_map = f.readlines()
     print(f"Part 1: {wire_cross_finder(wire_map)}")
     print(f"Part 2: {wire_cross_finder_wire_distance(wire_map)}")
