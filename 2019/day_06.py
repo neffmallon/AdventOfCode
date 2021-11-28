@@ -29,7 +29,7 @@ def orbit_transfer_distance(orbit_tree: Tree):
     y = [(n, orbit_tree.depth(n)) for n in orbit_tree.rsearch("YOU")]
     s = [(n, orbit_tree.depth(n)) for n in orbit_tree.rsearch("SAN")]
     both = [n for n in y if n in s]
-    return (orbit_tree.depth("YOU") + orbit_tree.depth("SAN")) - (both[0][1]+1) * 2
+    return (orbit_tree.depth("YOU") + orbit_tree.depth("SAN")) - (both[0][1] + 1) * 2
 
 
 if __name__ == "__main__":
