@@ -4,6 +4,7 @@ from pytest import Pytester
 from computer import IntcodeComputer
 from intcode_computer import intcode_computer, instruction_reader
 from intcode_test_fixtures import test_pairs, day_2_input, day_5_part_1_input
+from programs import boost
 
 
 def test_instruction_reader():
@@ -78,3 +79,31 @@ def test_IntcodeComputer_day5(day_5_part_1_input):
     computer = IntcodeComputer(day_5_part_1_input, inputs=inputs)
     computer.run_to_halt()
     assert computer.outputs == [513116]
+
+
+def test_IntcodeComputer_pretest_day9():
+    code = [109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99]
+    computer = IntcodeComputer(code)
+    computer.run_to_halt()
+    assert computer.outputs == code
+
+    code = [1102, 34915192, 34915192, 7, 4, 7, 99, 0]
+    computer = IntcodeComputer(code)
+    computer.run_to_halt()
+    assert computer.outputs[0] == 1219070632396864
+
+    code = [104, 1125899906842624, 99]
+    computer = IntcodeComputer(code)
+    computer.run_to_halt()
+    assert computer.outputs[0] == 1125899906842624
+
+def test_IntcodeComputer_test_day9():
+    computer = IntcodeComputer(boost, inputs=[1])
+    computer.run_to_halt()
+    assert len(computer.outputs) == 1
+    assert computer.outputs[0] == 3429606717
+
+    computer = IntcodeComputer(boost, inputs=[2])
+    computer.run_to_halt()
+    assert len(computer.outputs) == 1
+    assert computer.outputs[0] == 33679
