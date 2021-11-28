@@ -1,4 +1,3 @@
-from intcode_computer import intcode_computer
 from itertools import permutations
 from intcode_test_fixtures import day_7_input
 from computer import IntcodeComputer, EndOfCodeError
@@ -11,21 +10,22 @@ def amplification_circuit_optimization(program, first_input: int, n_cycles: int)
     phase_space = [i for i in range(n_cycles)]
     thruster_signals = dict()
     for phases in permutations(phase_space):
-        input_instruction = [first_input]
+        input_instruction = first_input
         for phase in phases:
-            _, input_instruction = intcode_computer(
-                program, [phase, input_instruction[0]]
-            )
-        thruster_signals[phases] = input_instruction[0]
+            computer = IntcodeComputer(program, inputs=[phase, input_instruction])
+            out = computer.run_to_output()
+            if out is not None:
+                input_instruction = out
+        thruster_signals[phases] = input_instruction
     return thruster_signals
 
 
 def test_amplification_circuit_optimization(day_7_input):
     thruster_signals = amplification_circuit_optimization(day_7_input, 0, 5)
-    assert max(thruster_signals) == 359142
+    assert max(thruster_signals.values()) == 359142
 
 
-def fedback_amplification_circuit(program, phases=(9, 8, 7, 6, 5), first_input=0):
+def feedback_amplification_circuit(program, phases=(9, 8, 7, 6, 5), first_input=0):
     amplifiers = {
         stage: IntcodeComputer(program, inputs=[phases[stage]]) for stage in range(5)
     }
@@ -56,7 +56,7 @@ def fedback_amplification_circuit_optimizer(
 ):
     max_out = 0
     for phases in permutations(phase_space):
-        out = fedback_amplification_circuit(program, phases, first_input)
+        out = feedback_amplification_circuit(program, phases, first_input)
         max_out = max(out, max_out)
     return max_out
 

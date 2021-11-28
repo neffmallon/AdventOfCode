@@ -1,5 +1,5 @@
 from amplifyier_circuit import (
-    fedback_amplification_circuit,
+    feedback_amplification_circuit,
     fedback_amplification_circuit_optimizer,
 )
 
@@ -37,7 +37,7 @@ def test_fedback_amplification_circuit_1():
         5,
     ]
     amp_phases = (9, 8, 7, 6, 5)
-    answer = fedback_amplification_circuit(test_program, amp_phases)
+    answer = feedback_amplification_circuit(test_program, amp_phases)
     assert answer == 139629729
 
 
@@ -102,7 +102,7 @@ def test_fedback_amplification_circuit_2():
         10,
     ]
     amp_phases = (9, 7, 8, 5, 6)
-    answer = fedback_amplification_circuit(test_program, amp_phases)
+    answer = feedback_amplification_circuit(test_program, amp_phases)
     assert answer == 18216
 
 
