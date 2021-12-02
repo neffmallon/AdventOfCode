@@ -3,8 +3,8 @@ import os
 from numpy import arctan, pi
 import cmath
 
-class AsteroidField:
 
+class AsteroidField:
     def __init__(self, field_rows: list):
         self.asteroids = set()
         self._populate_asteroids(field_rows)
@@ -16,7 +16,7 @@ class AsteroidField:
             if (r, c) == (row, col):
                 continue
             side = r > row or (r == row and c > col)
-            ratios.add(self._get_angle(r-row, c-col))
+            ratios.add(self._get_angle(r - row, c - col))
         return len(ratios)
 
     def find_best_asteroid_station(self):
@@ -68,7 +68,9 @@ class AsteroidField:
         return polar_map
 
     def get_angle_from_station(self, row, column):
-        return cmath.polar(-1 * (self.station[0] - row) + 1j * (column - self.station[1]))
+        return cmath.polar(
+            -1 * (self.station[0] - row) + 1j * (column - self.station[1])
+        )
 
     @staticmethod
     def _get_angle(delta_r, delta_c):
@@ -85,10 +87,10 @@ if __name__ == "__main__":
     project_dir = Path(__file__).resolve().parents[1]
     file = os.path.join(project_dir, "2019", "day_10_input.txt")
     with open(file, "r") as f:
-        m = [s.strip('\n') for s in f]
+        m = [s.strip("\n") for s in f]
 
     f = AsteroidField(m)
-    print(f"Part 1: {f.find_best_asteroid_station()}") # should be 296
+    print(f"Part 1: {f.find_best_asteroid_station()}")  # should be 296
     zap_order = f.find_zap_order()
     answer = zap_order[199][0] * 100 + zap_order[199][1]
     print(f"Part 2: {answer}")

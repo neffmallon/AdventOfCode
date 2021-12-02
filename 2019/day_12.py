@@ -6,7 +6,6 @@ import dataclasses
 import time
 
 
-
 @dataclasses.dataclass
 class Vector:
     x: int
@@ -34,21 +33,38 @@ class MoonSystem:
                 if moon_idx == other_moon_idx:
                     continue
 
-                if self.moons[moon_idx].position.x > self.moons[other_moon_idx].position.x:
-                    self.moons[moon_idx].velocity.x -=1
-                elif self.moons[moon_idx].position.x < self.moons[other_moon_idx].position.x:
-                    self.moons[moon_idx].velocity.x +=1
+                if (
+                    self.moons[moon_idx].position.x
+                    > self.moons[other_moon_idx].position.x
+                ):
+                    self.moons[moon_idx].velocity.x -= 1
+                elif (
+                    self.moons[moon_idx].position.x
+                    < self.moons[other_moon_idx].position.x
+                ):
+                    self.moons[moon_idx].velocity.x += 1
 
-                if self.moons[moon_idx].position.y > self.moons[other_moon_idx].position.y:
-                    self.moons[moon_idx].velocity.y -=1
-                elif self.moons[moon_idx].position.y < self.moons[other_moon_idx].position.y:
-                    self.moons[moon_idx].velocity.y +=1
+                if (
+                    self.moons[moon_idx].position.y
+                    > self.moons[other_moon_idx].position.y
+                ):
+                    self.moons[moon_idx].velocity.y -= 1
+                elif (
+                    self.moons[moon_idx].position.y
+                    < self.moons[other_moon_idx].position.y
+                ):
+                    self.moons[moon_idx].velocity.y += 1
 
-                if self.moons[moon_idx].position.z > self.moons[other_moon_idx].position.z:
-                    self.moons[moon_idx].velocity.z -=1
-                elif self.moons[moon_idx].position.z < self.moons[other_moon_idx].position.z:
-                    self.moons[moon_idx].velocity.z +=1
-
+                if (
+                    self.moons[moon_idx].position.z
+                    > self.moons[other_moon_idx].position.z
+                ):
+                    self.moons[moon_idx].velocity.z -= 1
+                elif (
+                    self.moons[moon_idx].position.z
+                    < self.moons[other_moon_idx].position.z
+                ):
+                    self.moons[moon_idx].velocity.z += 1
 
     def _update_position(self):
         for moon_idx in range(len(self.moons)):
@@ -91,12 +107,15 @@ def find_frequency(moon_list: list):
             step += 1
             if sum(velocities) == 0:
                 if sum([abs(x) for x in velocities]) == 0:
-                    if positions == [m.position.__getattribute__(key) for m in moon_list]:
+                    if positions == [
+                        m.position.__getattribute__(key) for m in moon_list
+                    ]:
                         break
         axis_period[key] = step
 
     print(axis_period)
     return axis_period
+
 
 if __name__ == "__main__":
     # tests first
@@ -104,10 +123,10 @@ if __name__ == "__main__":
 
 if False:
     moons = [
-        Moon(position=Vector(-1,   0,   2)),
-        Moon(position=Vector( 2, -10,  -7)),
-        Moon(position=Vector( 4,  -8,   8)),
-        Moon(position=Vector( 3,   5,  -1)),
+        Moon(position=Vector(-1, 0, 2)),
+        Moon(position=Vector(2, -10, -7)),
+        Moon(position=Vector(4, -8, 8)),
+        Moon(position=Vector(3, 5, -1)),
     ]
     """
     # <editor-fold desc="early work">
@@ -142,10 +161,10 @@ if False:
 
 if False:
     moons = [
-        Moon(position=Vector(-8, -10,   0)),
-        Moon(position=Vector( 5,   5,  10)),
-        Moon(position=Vector( 2,  -7,   3)),
-        Moon(position=Vector( 9,  -8,  -3)),
+        Moon(position=Vector(-8, -10, 0)),
+        Moon(position=Vector(5, 5, 10)),
+        Moon(position=Vector(2, -7, 3)),
+        Moon(position=Vector(9, -8, -3)),
     ]
     my_moons = MoonSystem(moons)
     for i in range(100):
@@ -173,10 +192,10 @@ if False:
 
     # real input
     moons = [
-        Moon(position=Vector(10,  15,   7)),
-        Moon(position=Vector(15,  10,   0)),
-        Moon(position=Vector(20,  12,   3)),
-        Moon(position=Vector( 0,  -3,  13)),
+        Moon(position=Vector(10, 15, 7)),
+        Moon(position=Vector(15, 10, 0)),
+        Moon(position=Vector(20, 12, 3)),
+        Moon(position=Vector(0, -3, 13)),
     ]
     my_moons = MoonSystem(moons)
     for i in range(1000):
@@ -187,10 +206,10 @@ if False:
 
 if True:
     moons = [
-        Moon(position=Vector(10,  15,   7)),
-        Moon(position=Vector(15,  10,   0)),
-        Moon(position=Vector(20,  12,   3)),
-        Moon(position=Vector( 0,  -3,  13)),
+        Moon(position=Vector(10, 15, 7)),
+        Moon(position=Vector(15, 10, 0)),
+        Moon(position=Vector(20, 12, 3)),
+        Moon(position=Vector(0, -3, 13)),
     ]
     start = time.time()
     find_frequency(moons)
