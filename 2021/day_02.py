@@ -1,4 +1,9 @@
-with open("2021/day_02_in.txt", "r") as f:
+from pathlib import Path
+import os
+
+project_dir = Path(__file__).resolve().parents[1]
+file = os.path.join(project_dir, "2021", "day_02_in.txt")
+with open(file, "r") as f:
     puzzle_input = [s.strip() for s in f]
 
 depth = 0
@@ -15,15 +20,9 @@ for i in instructions:
         depth -= int(i[1])
 print(f"Part 1: {depth*x_pos}")
 
-
-with open("2021/day_02_in.txt", "r") as f:
-    puzzle_input = [s.strip() for s in f]
-
 depth = 0
 x_pos = 0
 aim = 0
-
-instructions = [s.split(" ") for s in puzzle_input]
 
 for i in instructions:
     if i[0] == "forward":
