@@ -17,6 +17,10 @@ def extract_board(string_list):
     return np.array(board)
 
 
+def extract_board_from_index(idx):
+    return extract_board(puzzle_input[2+6*idx:7+6*idx])
+
+
 def get_numbers_to_win(board):
     bingo = False
     n_index = -1
@@ -30,22 +34,22 @@ def get_numbers_to_win(board):
             r, c = np.where(board == n)
             counts[f"r{r[0]}"] += [n]
             counts[f"c{c[0]}"] += [n]
-            # if r == c:
-            #     counts["d0"] += [n]
-            # if r[0] + c[0] == 4:
-            #    counts["d1"] += [n]
         if max([len(v) for v in counts.values()]) == 5:
             bingo = True
-            #print(counts)
-    #print(n_index)
     return n_index
 
-pointer = 2
+
+def get_score(board: np.ndarray):
+    b = board.flatten()
+    n  = get_numbers_to_win(board)
+    s = sum([int(n) for n in board if n not in bingo_balls[: n + 1]])
+    return s*int(bingo_balls[n])
+
 board_marks_to_win = []
-for pointer in range(2, 602, 6):
+for idx in range(100):
     # for pointer in range(2, 20, 6):
-    board = extract_board(puzzle_input[pointer:pointer+5])
-    board_marks_to_win.append(get_numbers_to_win(board))
+    bb = extract_board_from_index(idx)
+    board_marks_to_win.append(get_numbers_to_win(bb))
 
 print(bingo_balls[min(board_marks_to_win)])
 
@@ -61,10 +65,6 @@ losing_board = board_marks_to_win.index(max(board_marks_to_win))
 board = extract_board(puzzle_input[2+6*losing_board:7+6*losing_board]).flatten()
 s = sum([int(n) for n in board if n not in bingo_balls[:max(board_marks_to_win)+1]])
 print("part 2 ", s*int(bingo_balls[max(board_marks_to_win)]))
-
-
-
-
 
 # you get a bingo if you get a whole row, a whole column, or either diagonal
 if __name__ == "__main__":
