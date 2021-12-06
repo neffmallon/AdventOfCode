@@ -13,7 +13,7 @@ class EndOfCodeError(Exception):
 class Code:
     def __init__(self, code):
         if type(code) == list:
-            self._code = {idx: v for idx, v in enumerate(code)}
+            self._code = {idx: int(v) for idx, v in enumerate(code)}
         elif type(code) == dict:
             self._code = code
         else:
@@ -153,7 +153,7 @@ class IntcodeComputer:
             if out is not None:
                 self.outputs.append(out)
 
-    def run_to_output(self):
+    def run_to_output(self) -> int:
         """Runs the computer until it produces output or halts."""
         out = None
         while self.peak_next_opcode() != 99 and out is None:
