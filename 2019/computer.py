@@ -146,6 +146,16 @@ class IntcodeComputer:
                 raise ValueError("Write operations are never in immediate mode")
         return opcode, modes
 
+    def run_to_input(self):
+        """Runs the computer until it halts."""
+        outs = []
+        while self.peak_next_opcode() % 100 not in (99, 3):
+            out = self.do_next_instruction()
+            if out is not None:
+                self.outputs.append(out)
+                outs.append(out)
+        return outs
+
     def run_to_halt(self):
         """Runs the computer until it halts."""
         while self.peak_next_opcode() != 99:
