@@ -5,7 +5,6 @@ import numpy as np
 from computer import IntcodeComputer
 
 
-
 class Direction(Enum):
     UP = "up"
     DOWN = "down"
@@ -45,9 +44,9 @@ class RobotPainter:
             if key[1] > y_range[1]:
                 y_range[1] = key[1]
 
-        x = np.linspace(x_range[0], x_range[1], num=1+x_range[1]-x_range[0])
-        y = np.linspace(y_range[0], y_range[1], num=1+y_range[1]-y_range[0])
-        paint_job = np.zeros((1+x_range[1]-x_range[0], 1+y_range[1]-y_range[0]))
+        x = np.linspace(x_range[0], x_range[1], num=1 + x_range[1] - x_range[0])
+        y = np.linspace(y_range[0], y_range[1], num=1 + y_range[1] - y_range[0])
+        paint_job = np.zeros((1 + x_range[1] - x_range[0], 1 + y_range[1] - y_range[0]))
 
         for i, xi in enumerate(x):
             for j, yi in enumerate(y):
@@ -81,7 +80,6 @@ class RobotPainter:
     def turn_bot(self, turn_direction: int):
         self.direction = self.turn_dict[self.direction][turn_direction]
 
-
     def update_position(self):
         if self.direction == Direction.UP:
             self.position = (self.position[0], self.position[1] + 1)
@@ -94,6 +92,7 @@ class RobotPainter:
         else:
             raise ValueError
 
+
 if __name__ == "__main__":
     from pathlib import Path
     import os
@@ -105,12 +104,12 @@ if __name__ == "__main__":
         puzzle_input = [s.strip() for s in f]
 
     botboy = RobotPainter(IntcodeComputer(puzzle_input[0].split(",")))
-    botboy.run_until_painted() # 2441 is correct
+    botboy.run_until_painted()  # 2441 is correct
 
-    botboy = RobotPainter(IntcodeComputer(puzzle_input[0].split(",")), hull_color={(0, 0): 1})
+    botboy = RobotPainter(
+        IntcodeComputer(puzzle_input[0].split(",")), hull_color={(0, 0): 1}
+    )
     botboy.run_until_painted()
     botboy_paint_job = botboy.display_paint_job()
 
-    plt.imshow(botboy_paint_job) # PZRFPRKC
-
-
+    plt.imshow(botboy_paint_job)  # PZRFPRKC
