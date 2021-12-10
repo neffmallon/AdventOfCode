@@ -2,6 +2,7 @@ import numpy as np
 from pathlib import Path
 import os
 
+
 def decode_numbers(num_list: list):
     lengths = [len(s) for s in num_list]
     decoded_dict = {
@@ -10,11 +11,12 @@ def decode_numbers(num_list: list):
         num_list[lengths.index(7)]: 8,
         num_list[lengths.index(4)]: 4,
     }
-    encode_dict = {1: {c for c in num_list[lengths.index(2)]},
-                   4: {c for c in num_list[lengths.index(3)]},
-                   7: {c for c in num_list[lengths.index(4)]},
-                   8: {c for c in num_list[lengths.index(7)]},
-                   }
+    encode_dict = {
+        1: {c for c in num_list[lengths.index(2)]},
+        4: {c for c in num_list[lengths.index(3)]},
+        7: {c for c in num_list[lengths.index(4)]},
+        8: {c for c in num_list[lengths.index(7)]},
+    }
     # do the rest of the logic later
     return decoded_dict
 
@@ -26,7 +28,9 @@ if __name__ == "__main__":
         puzzle_input = [s.strip() for s in f]
 
     output_digits = [s.split(" | ")[1].split(" ") for s in puzzle_input]
-    count_1478 = sum([sum([1 for c in s if len(c) in (2,3,4,7)]) for s in output_digits])
+    count_1478 = sum(
+        [sum([1 for c in s if len(c) in (2, 3, 4, 7)]) for s in output_digits]
+    )
     print(f"Part 1: {count_1478}")
 
     # Part 2: decode the values, then add them all up!
@@ -45,6 +49,3 @@ if __name__ == "__main__":
     # ID 6 vs 9 by comparing vs 1
     # ID 3 by comparing vs 1
     # ID 5 vs 2 by comparing to 8-9 or 8-6
-
-
-
