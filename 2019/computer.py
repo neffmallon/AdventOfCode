@@ -1,5 +1,7 @@
-from dataclasses import dataclass
+import abc
 import logging
+from dataclasses import dataclass
+from typing import Callable
 
 from programs import boost
 
@@ -68,13 +70,17 @@ class IntcodeComputer:
     def add_input(self, input_value):
         self.inputs.append(input_value)
 
+    @property
+    def is_complete(self):
+        return self.code[self.pointer] == 99 or self.pointer is None
+
     def do_next_instruction(self):
         """Executes the next instruction on the computer."""
         # TODO: Consider refactoring this to use a function to get all the args
         if len(self.code) < 20:
             logging.debug(f"code: {self.code}")
 
-        if self.code[self.pointer] == 99 or self.pointer is None:
+        if self.is_complete:
             raise EndOfCodeError(
                 "The code has stopped, there are no more instructions to do"
             )
@@ -237,7 +243,6 @@ class IntcodeComputer:
         self.pointer += 4
 
     def modify_relative_base(self, input1):
-
         logging.debug(
             f"Input check: pointer: {self.pointer}  \tinput: {input1}  \traw input: {self.code[self.pointer+1]}"
         )

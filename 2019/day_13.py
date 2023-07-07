@@ -1,5 +1,5 @@
-from computer import IntcodeComputer
 import numpy as np
+from computer import IntcodeComputer
 
 
 def create_screen(d_inst: list) -> dict:
@@ -31,9 +31,8 @@ def draw_screen(d):
 
 
 if __name__ == "__main__":
-    from pathlib import Path
     import os
-    import matplotlib.pyplot as plt
+    from pathlib import Path
 
     project_dir = Path(__file__).resolve().parents[1]
     file = os.path.join(project_dir, "2019", "day_13_in.txt")
