@@ -1,6 +1,8 @@
 # Space Stoichiometry
+import os
 from dataclasses import dataclass
 from math import ceil
+from pathlib import Path
 from typing import Dict, List, Tuple
 
 # OUTLINE
@@ -75,3 +77,35 @@ def get_needed_ore(
         reactants_created.get(target, 0) + reps * reaction.product_amount
     )
     return reactants_needed
+
+
+if __name__ == "__main__":
+    project_dir = Path(__file__).resolve().parents[1]
+    file = os.path.join(project_dir, "year2019", "day_14_in.txt")
+    with open(file, "r") as f:
+        puzzle_input = [s.strip() for s in f]
+
+    reactions_list = [Reaction.from_string(s) for s in puzzle_input]
+    reaction_dict = {r.product_name: r for r in reactions_list}
+
+    max_ore = 1000000000000
+    ore_for_one = get_needed_ore(reaction_dict, "FUEL", 1, dict(), dict())["ORE"]
+    min_answer = max_ore // ore_for_one
+    ore_needed = get_needed_ore(reaction_dict, "FUEL", min_answer, dict(), dict())[
+        "ORE"
+    ]
+
+    while ore_needed <= max_ore:
+        if (max_ore // ore_needed) > 1:
+            min_answer = min_answer * (max_ore // min_answer)
+        elif (max_ore - ore_needed) // ore_for_one > 1:
+            min_answer += (max_ore - ore_needed) // ore_for_one
+        else:
+            min_answer += 1
+        ore_needed = get_needed_ore(reaction_dict, "FUEL", min_answer, dict(), dict())[
+            "ORE"
+        ]
+    print(f"Part 2 Final Answer: {min_answer-1}")
+    print(
+        f"Ore Needed: {get_needed_ore(reaction_dict, 'FUEL', min_answer-1, dict(), dict())['ORE']}"
+    )
