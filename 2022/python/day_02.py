@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 project_dir = Path(__file__).resolve().parents[1]
-file = os.path.join(project_dir, "2022", "day_02_in.txt")
+file = os.path.join(project_dir, "2022", "../inputs/day_02_in.txt")
 with open(file, "r") as f:
     puzzle_input = [s.strip() for s in f]
 
