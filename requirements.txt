@@ -1,0 +1,7 @@
+pandas
+treelib
+numpy
+pytest
+black
+isort
+tk
