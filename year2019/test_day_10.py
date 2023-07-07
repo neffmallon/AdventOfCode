@@ -44,7 +44,7 @@ def map4():
 @pytest.fixture
 def problem_data():
     project_dir = Path(__file__).resolve().parents[1]
-    file = os.path.join(project_dir, "2019", "day_10_input.txt")
+    file = os.path.join(project_dir, "year2019", "day_10_input.txt")
     with open(file, "r") as f:
         map = f.readline().strip()
     return AsteroidField(map)

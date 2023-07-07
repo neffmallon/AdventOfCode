@@ -35,7 +35,7 @@ if __name__ == "__main__":
     from pathlib import Path
 
     project_dir = Path(__file__).resolve().parents[1]
-    file = os.path.join(project_dir, "2019", "day_13_in.txt")
+    file = os.path.join(project_dir, "year2019", "day_13_in.txt")
     with open(file, "r") as f:
         puzzle_input = [s.strip() for s in f]
 

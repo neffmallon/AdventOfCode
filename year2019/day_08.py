@@ -45,7 +45,7 @@ if __name__ == "__main__":
     import os
 
     project_dir = Path(__file__).resolve().parents[1]
-    file = os.path.join(project_dir, "2019", "day_08_input.txt")
+    file = os.path.join(project_dir, "year2019", "day_08_input.txt")
     with open(file, "r") as f:
         image_data = f.readline().strip()
 
@@ -53,6 +53,6 @@ if __name__ == "__main__":
     assert image.image_check() == 1690
     print(f"Part 1: {image.image_check()}")
     print(f"Part 2:\n{image.decode_image()}")
-    file = os.path.join(project_dir, "2019", "day_08_part_2.png")
+    file = os.path.join(project_dir, "year2019", "day_08_part_2.png")
     plt.imsave(file, image.decoded_image)
     # it should read ZPZUB

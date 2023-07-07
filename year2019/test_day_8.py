@@ -12,7 +12,7 @@ def example_image():
 @pytest.fixture()
 def problem_image():
     project_dir = Path(__file__).resolve().parents[1]
-    file = os.path.join(project_dir, "2019", "day_08_input.txt")
+    file = os.path.join(project_dir, "year2019", "day_08_input.txt")
     with open(file, "r") as f:
         image_data = f.readline().strip()
     return SpaceImage(25, 6, image_data)
